@@ -16,11 +16,15 @@ use common\models\User;
 
     <?= $form->field($model, 'number')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'id_project')->textInput() ?>
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'details')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'id_developer')->dropDownList(ArrayHelper::map(User::find()->all(), 'id', 'username')) ?>
+
+    <?= $form->field($model, 'id_initiator')->dropDownList(ArrayHelper::map(User::find()->all(), 'id', 'username')) ?>
 
     <?= $form->field($model, 'date_create')->textInput(['type' => 'date']) ?>
 

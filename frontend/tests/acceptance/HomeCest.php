@@ -16,5 +16,12 @@ class HomeCest
         $I->wait(2); // wait for page to be opened
 
         $I->see('This is the About page.');
+        $I->click('Contact');
+        $I->wait(2); // wait for page to be opened
+
+        $I->click('Signup');
+        $I->wait(2); // wait for page to be opened
+
+        $I->click('Login');
     }
 }

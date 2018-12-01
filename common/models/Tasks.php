@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -41,13 +42,14 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['number', 'name'], 'required'],
-            [['id_developer', 'id_status'], 'integer'],
+            [['id_developer', 'id_initiator', 'id_status', 'id_project'], 'integer'],
             [['date_create', 'date_resolve', 'date_change'], 'safe'],
             [['number', 'name'], 'string', 'max' => 50],
             [['details'], 'string', 'max' => 500],
             [['img'], 'string', 'max' => 200],
             [['number'], 'unique'],
             [['id_developer'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_developer' => 'id']],
+            [['id_initiator'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_initiator' => 'id']],
         ];
     }
 
@@ -60,8 +62,10 @@ class Tasks extends \yii\db\ActiveRecord
             'id' => 'ID',
             'number' => 'Number',
             'name' => 'Name',
+            'id_project' => 'Project',
             'details' => 'Details',
             'id_developer' => 'Id Developer',
+            'id_initiator' => 'Id Initiator',
             'date_create' => 'Date Create',
             'date_resolve' => 'Date Resolve',
             'id_status' => 'Id Status',
@@ -76,5 +80,14 @@ class Tasks extends \yii\db\ActiveRecord
     public function getDeveloper()
     {
         return $this->hasOne(User::className(), ['id' => 'id_developer']);
+    }
+
+    public static function getTasksCurrentMonth()
+    {
+        return static::find()
+            ->andWhere(['>', 'date_create', new Expression('LAST_DAY(CURDATE()) + INTERVAL 1 DAY - INTERVAL 1 MONTH') ])
+            ->andWhere(['<', 'date_create', new Expression('DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)') ])
+            ->all();
+
     }
 }

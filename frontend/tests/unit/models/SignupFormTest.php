@@ -56,4 +56,5 @@ class SignupFormTest extends \Codeception\Test\Unit
         expect($model->getFirstError('email'))
             ->equals('This email address has already been taken.');
     }
+
 }

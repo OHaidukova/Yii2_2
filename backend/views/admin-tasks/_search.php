@@ -19,11 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'number') ?>
 
+    <?= $form->field($model, 'id_project') ?>
+
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'details') ?>
 
     <?= $form->field($model, 'id_developer') ?>
+
+    <?= $form->field($model, 'id_initiator') ?>
 
     <?php // echo $form->field($model, 'date_create') ?>
 
