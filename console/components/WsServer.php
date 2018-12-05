@@ -16,7 +16,7 @@ class WsServer implements MessageComponentInterface
         $queryString = $conn->httpRequest->getUri()->getQuery();
         $channel = explode("=", $queryString)[1];
         echo $channel;
-        $this->clients['channel'][$conn->resourceId] = $conn;
+        $this->clients[$channel][$conn->resourceId] = $conn;
 
         echo "New connection: {$conn->resourceId}\n";
     }
@@ -27,17 +27,19 @@ class WsServer implements MessageComponentInterface
         try {
             (new Chat($data))->save();
         } catch(\Exception $e) {
-            var_dump($e->getMessage());
+            var_dump("Message: ", $e->getMessage());
         }
 
 
-        foreach ($this->clients['channel'] as $client) {
+        foreach ($this->clients[$channel] as $client) {
             $client->send($data['message']);
         }
     }
 
     function onClose(ConnectionInterface $conn) {
-        $this->clients->detach($conn);
+        $queryString = $conn->httpRequest->getUri()->getQuery();
+        $channel = explode("=", $queryString)[1];
+        unset($this->clients[$channel][$conn->resourceId]);
         echo "user {$conn->resourceId} disconnect!";
     }
 

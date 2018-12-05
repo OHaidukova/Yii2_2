@@ -19,9 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
+<?php \yii\widgets\Pjax::begin(); ?>
     <?
-
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -51,6 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
 //                ]
 //
 //    ])
-
+\yii\widgets\Pjax::end();
     ?>
 </div>

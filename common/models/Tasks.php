@@ -90,4 +90,11 @@ class Tasks extends \yii\db\ActiveRecord
             ->all();
 
     }
+
+    public static function getTasksProject($id)
+    {
+        return static::find()
+            ->andWhere(['=', 'id_project', $id])
+            ->all();
+    }
 }

@@ -31,6 +31,7 @@ class m181015_213903_create_tasks_table extends Migration
         $this->createIndex("index_id_developer", "tasks", "id_developer", false);
         $this->addForeignKey('fk_tasks_user', 'tasks','id_developer', 'user', 'id');
         $this->addForeignKey('tasks_ibfk_1', 'tasks','id_initiator', 'user', 'id');
+        $this->addForeignKey('tasks_ibfk_2', 'tasks','id_project', 'project', 'id');
 
     }
 
