@@ -10,6 +10,7 @@ namespace console\controllers;
 
 
 use common\models\TelegramOffset;
+use common\models\TelegramSubscribe;
 use SonkoDmitry\Yii\TelegramBot\Component;
 use TelegramBot\Api\Types\Message;
 use TelegramBot\Api\Types\Update;
@@ -72,7 +73,16 @@ class TelegramController extends Controller
            case "/help":
                $response = "Commands: \n";
                $response .= "/help - commands list \n";
-               $response .= "/project_create ##project name## - create project \n";
+               $response .= "/subsc_project_create - subscribe on create project \n";
+               break;
+           case "/subsc_project_create":
+               $model = new TelegramSubscribe([
+                   'chat_id' => $message->getFrom()->getId(),
+                   'channel' => TelegramSubscribe::CHANNEL_PROJECT_CREATE
+               ]);
+               $model->save();
+
+               $response = "You subscribed";
        };
 
        $this->bot->sendMessage($message->getFrom()->getId(), $response);

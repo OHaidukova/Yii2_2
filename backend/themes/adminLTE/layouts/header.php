@@ -30,6 +30,11 @@ use yii\bootstrap\Nav;
                         Tasks
                     </a>
                 </li>
+                <li class="dropdown messages-menu">
+                    <a href="/project">
+                        Projects
+                    </a>
+                </li>
 
                 <?php if (!Yii::$app->user->isGuest):?>
 
