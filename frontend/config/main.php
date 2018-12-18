@@ -11,6 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'task' => [
+            'class' => 'frontend\modules\task\Module'
+        ]
+    ],
     'components' => [
         'bot' => [
             'class' => \SonkoDmitry\Yii\TelegramBot\Component::class,
@@ -19,6 +24,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'cookieValidationKey' => $params['cookieValidationKey'],
+            'parsers' => [
+                'application/json' => \yii\web\JsonParser::class,
+            ]
         ],
 //        'user' => [
 //            'identityClass' => 'common\models\User',
@@ -67,6 +75,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => \yii\rest\UrlRule::class, 'controller' => ['message', 'task/task']]
             ],
         ],
 
